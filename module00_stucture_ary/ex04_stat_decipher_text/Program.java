@@ -2,28 +2,28 @@ import java.util.Scanner;
 
 public class Program {
 
-	private static final int	designatedOutput	= 10;
-	private static final int	maxOccurrence 		= 999;
-	private static final int	maxFigureWidth		= 3;
-	private static final int	maxColumnHeight		= 10;
-	private static final int	symbolOffset		= 2;
-	private static final int	gapPerData			= 4;
-	private static final int 	columnSeparation 	= designatedOutput - 1;
-	private static final int	maxUniqueChar		= 65535;
-	private static final int	maxTableHeight		= 1 + maxColumnHeight + 1;//label + chart + value
-	private static final int	maxTableWidth		= (maxFigureWidth * designatedOutput) + columnSeparation;
+	private static final int DESIGNATED_OUTPUT = 10;
+	private static final int MAX_OCCURRENCE = 999;
+	private static final int MAX_FIGURE_WIDTH = 3;
+	private static final int MAX_COLUMN_HEIGHT = 10;
+	private static final int SYMBOL_OFFSET = 2;
+	private static final int GAP_PER_DATA = 4;
+	private static final int COLUMN_SEPARATION = DESIGNATED_OUTPUT - 1;
+	private static final int MAX_UNIQUE_CHAR = 65535;
+	private static final int MAX_TABLE_HEIGHT = 1 + MAX_COLUMN_HEIGHT + 1;//label + chart + value
+	private static final int MAX_TABLE_WIDTH = (MAX_FIGURE_WIDTH * DESIGNATED_OUTPUT) + COLUMN_SEPARATION;
 
 	private static int[] extractSelection(int[] input) {
-		int[] result = new int[designatedOutput];
+		int[] result = new int[DESIGNATED_OUTPUT];
 
 		//copy in the 1st ten index
-		for (int i = 0; i < designatedOutput; i++)
+		for (int i = 0; i < DESIGNATED_OUTPUT; i++)
 			result[i] = i;
 
 		//sort the 1st ten based on content pointed by the index
 		int temp = 0;
-		for (int j = 0; j < designatedOutput - 1; j++) {
-			for (int k = 0; k < designatedOutput - 1 - j; k++) {
+		for (int j = 0; j < DESIGNATED_OUTPUT - 1; j++) {
+			for (int k = 0; k < DESIGNATED_OUTPUT - 1 - j; k++) {
 				if (input[result[k]] < input[result[k + 1]]) {
 					temp = result[k];
 					result[k] = result[k + 1];
@@ -33,15 +33,15 @@ public class Program {
 		}
 
 		//update result[] with the rest of entries in input[]
-		for (int l = designatedOutput; l < input.length; l++) {
+		for (int l = DESIGNATED_OUTPUT; l < input.length; l++) {
 			//compare each of the rest with the lowest member of the top 10
-			if (input[result[designatedOutput - 1]] >= input[l])
+			if (input[result[DESIGNATED_OUTPUT - 1]] >= input[l])
 				continue;
 			//encountered legit value to be inserted into top 10
-			for (int m = designatedOutput - 2; m >= 0; m--) {
+			for (int m = DESIGNATED_OUTPUT - 2; m >= 0; m--) {
 				if (input[l] <= input[result[m]] || (m == 0) && input[l] > input[result[0]]) {
 					//shift the lower elements one unit down before insert new value
-					for (int n = designatedOutput - 1; n > m; n--) {
+					for (int n = DESIGNATED_OUTPUT - 1; n > m; n--) {
 						result[n] = result[n - 1];
 					}
 					//insert the new value
@@ -57,10 +57,10 @@ public class Program {
 	}
 
 	private static char[][] createChart(int[] selection, int[] freq, int scale) {
-		char[][] chart = new char[maxTableHeight][maxTableWidth];
+		char[][] chart = new char[MAX_TABLE_HEIGHT][MAX_TABLE_WIDTH];
 
-		for (int i = 0; i < maxTableHeight; i++) {
-			for (int j = 0; j < maxTableWidth; j++) {
+		for (int i = 0; i < MAX_TABLE_HEIGHT; i++) {
+			for (int j = 0; j < MAX_TABLE_WIDTH; j++) {
 				chart[i][j] = ' ';
 			}
 		}
@@ -73,11 +73,11 @@ public class Program {
 		String figure;
 		for (int i = 0; i < selection.length; i++) {
 			colWidth = Integer.toString(freq[selection[i]]).length();
-			if (colWidth < maxFigureWidth)
-				xOffset = maxFigureWidth - colWidth;
+			if (colWidth < MAX_FIGURE_WIDTH)
+				xOffset = MAX_FIGURE_WIDTH - colWidth;
 
-			symbolCount = ((long)freq[selection[i]] * maxColumnHeight) / scale;
-			drawY = (maxTableHeight - 1) - 1 - (int)symbolCount;
+			symbolCount = ((long)freq[selection[i]] * MAX_COLUMN_HEIGHT) / scale;
+			drawY = (MAX_TABLE_HEIGHT - 1) - 1 - (int)symbolCount;
 
 			//fill in the value;
 			figure = Integer.toString(freq[selection[i]]);
@@ -88,14 +88,14 @@ public class Program {
 
 			//fill in the chart symbol
 			for (int j = 0; j < symbolCount; j++) {
-				chart[drawY + j][drawX + symbolOffset] = '#';
+				chart[drawY + j][drawX + SYMBOL_OFFSET] = '#';
 			}
 
 			//fill in the label
 			drawY += (int)symbolCount;
-			chart[drawY][drawX + symbolOffset] = (char)selection[i];
+			chart[drawY][drawX + SYMBOL_OFFSET] = (char)selection[i];
 
-			drawX += gapPerData;
+			drawX += GAP_PER_DATA;
 		}
 		return (chart);
 	}
@@ -108,7 +108,7 @@ public class Program {
 
 		long strLength = inputStr.length();
 		char[] sourceText = inputStr.toCharArray();
-		int[] freq = new int[maxUniqueChar];
+		int[] freq = new int[MAX_UNIQUE_CHAR];
 
 		for (int i = 0; i < strLength; i++) {
 			freq[sourceText[i]]++;//implicit widening, cha to int
@@ -116,16 +116,16 @@ public class Program {
 
 		//identify the top 10, set those > 999 to 999, order already secured
 		int[]	finalSelection = extractSelection(freq);
-		for (int i = 0; i < designatedOutput; i++) {
-			if (freq[finalSelection[i]] > maxOccurrence)
-				freq[finalSelection[i]] = maxOccurrence;
+		for (int i = 0; i < DESIGNATED_OUTPUT; i++) {
+			if (freq[finalSelection[i]] > MAX_OCCURRENCE)
+				freq[finalSelection[i]] = MAX_OCCURRENCE;
 		}
 
 		int chartScale = freq[finalSelection[0]];
 		char[][] chart = createChart(finalSelection, freq, chartScale);
 
-		for (int i = 0; i < maxTableHeight; i++) {
-			for (int j = 0; j < maxTableWidth; j++) {
+		for (int i = 0; i < MAX_TABLE_HEIGHT; i++) {
+			for (int j = 0; j < MAX_TABLE_WIDTH; j++) {
 				System.out.print(chart[i][j]);
 			}
 			System.out.println();
