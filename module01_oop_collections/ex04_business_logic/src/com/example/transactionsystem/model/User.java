@@ -1,5 +1,6 @@
 package com.example.transactionsystem.model;
 
+import com.example.transactionsystem.exception.TransactionNotFoundException;
 import com.example.transactionsystem.repository.TransactionList;
 import com.example.transactionsystem.repository.TransactionsLinkedList;
 import com.example.transactionsystem.utility.UserIdsGenerator;
@@ -26,6 +27,7 @@ public class User {
 	public Integer getIdentifier() { return identifier; }
 	public String getName() { return name; }
 	public Integer getBalance() { return balance; }
+	public Integer getTransactionCount() { return transactionCount; }
 
 	public void	addTransaction(String APIkey, Transaction item) {
 		if (this.APIkey.equals(APIkey)) {
@@ -36,8 +38,12 @@ public class User {
 		}
 	}
 
-	public void removeTransaction(UUID transactionID) {
-		lst.remove(transactionID);
+	public void removeTransaction(UUID transactionID) throws TransactionNotFoundException {
+		try {
+			lst.remove(transactionID);
+		} catch (TransactionNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
 	public void debit(String APIkey, Integer amount) {
@@ -50,5 +56,13 @@ public class User {
 		if (this.APIkey.equals(APIkey)) {
 			balance+=amount;
 		}
+	}
+
+	public Transaction[] getTransactionHistory() {
+		return (lst.toArray());
+	}
+
+	public Transaction[] getFailedTransactionHistory() {
+		return (lst.extractFailedTransactionRecord());
 	}
 }

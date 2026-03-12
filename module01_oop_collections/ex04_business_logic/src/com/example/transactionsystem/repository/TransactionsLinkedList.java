@@ -8,6 +8,7 @@ import java.util.UUID;
 public class TransactionsLinkedList implements  TransactionList {
 	private Node head;
 	private int nodeCount;
+	private int failedCount;
 
 	private static class Node {
 		private final Transaction item;
@@ -32,10 +33,13 @@ public class TransactionsLinkedList implements  TransactionList {
 
 		head = newHead;
 		nodeCount++;
+		if (!item.getTransactionStatus()) {
+			failedCount++;
+		}
 	}
 
 	@Override
-	public void remove(UUID transactionID) {
+	public void remove(UUID transactionID) throws TransactionNotFoundException {
 		Node ptr = head;
 
 		while (ptr != null) {
@@ -57,6 +61,8 @@ public class TransactionsLinkedList implements  TransactionList {
 				}
 
 				nodeCount--;
+				if (!ptr.item.getTransactionStatus())
+					failedCount--;
 
 				return ;
 			}
@@ -76,6 +82,23 @@ public class TransactionsLinkedList implements  TransactionList {
 			lst[i] = ptr.item;
 			ptr = ptr.next;
 			i++;
+		}
+		return (lst);
+	}
+
+	@Override
+	public Transaction[] extractFailedTransactionRecord() {
+		Transaction[] lst = new Transaction[failedCount];
+
+		Node ptr = head;
+		int i = 0;
+
+		while (ptr != null) {
+			if (!ptr.item.getTransactionStatus()) {
+				lst[i] = ptr.item;
+				i++;
+			}
+			ptr = ptr.next;
 		}
 		return (lst);
 	}

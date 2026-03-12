@@ -30,8 +30,17 @@ public class UsersArrayList implements UsersList {
 		userCount++;
 	}
 
+	public boolean userExists(Integer userID){
+		for (int i = 0; i < userCount; i++) {
+			if (users[i].getIdentifier().equals(userID)) {
+				return (true);
+			}
+		}
+		return (false);
+	}
+
 	@Override
-	public User getUser(Integer id){
+	public User getUser(Integer id) throws UserNotFoundException {
 		for (int i = 0; i < userCount; i++) {
 			if (users[i].getIdentifier().equals(id)) {
 				return users[i];
@@ -41,7 +50,7 @@ public class UsersArrayList implements UsersList {
 	}
 
 	@Override
-	public User getUser(int idx) {
+	public User getUser(int idx) throws UserNotFoundException {
 		if (idx < 0 || idx >= userCount) {
 			throw new UserNotFoundException("Invalid user index: " + idx);
 		}

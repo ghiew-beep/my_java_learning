@@ -8,4 +8,5 @@ public interface TransactionList {
 	public void add(Transaction item);
 	public void remove(UUID transactionID);
 	public Transaction[] toArray();
+	public Transaction[] extractFailedTransactionRecord();
 }

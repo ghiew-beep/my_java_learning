@@ -35,4 +35,5 @@ public class Transaction {
 	public User getSender() { return sender; }
 	public TransferCategory getTransferCategory() { return transfer_category; }
 	public Integer getTransferAmount() { return transfer_amount; }
+	public boolean getTransactionStatus() { return transactionSuccess; }
 }

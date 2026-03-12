@@ -1,9 +1,13 @@
 package com.example.transactionsystem.service;
 
 import com.example.transactionsystem.exception.IllegalTransactionException;
+import com.example.transactionsystem.exception.TransactionNotFoundException;
+import com.example.transactionsystem.exception.UserNoTransactionException;
+import com.example.transactionsystem.exception.UserNotFoundException;
 import com.example.transactionsystem.model.Transaction;
 import com.example.transactionsystem.model.TransferCategory;
 import com.example.transactionsystem.model.User;
+import com.example.transactionsystem.repository.TransactionList;
 import com.example.transactionsystem.repository.UsersArrayList;
 import com.example.transactionsystem.repository.UsersList;
 
@@ -55,6 +59,38 @@ public class TransactionService {
 	}
 
 	//get user transaction record in ary form via user name and user ID
-	//remove record via user name and user ID
-	//inspect list of failed transaction per user/system wide
+	public Transaction[] getTransactionRecord(User subject) {
+		if (!lst.userExists(subject.getIdentifier())) {
+			throw new UserNotFoundException("User not found");
+		}
+		if (subject.getTransactionCount() < 0) {
+			throw new UserNoTransactionException("User has no transaction record");
+		}
+		return (subject.getTransactionHistory());
+	}
+
+	//inspect list of failed transaction per user
+	public Transaction[] getFailedTransactionRecord(User subject) {
+		if (!lst.userExists(subject.getIdentifier())) {
+			throw new UserNotFoundException("User not found");
+		}
+		if (subject.getTransactionCount() < 0) {
+			throw new UserNoTransactionException("User has no transaction record");
+		}
+		return (subject.getFailedTransactionHistory());
+	}
+
+	//remove record via userID and transactionID
+	public void removeRecord(Integer userID, UUID transactionID) {
+		try {
+			User temp = lst.getUser(userID);
+			if (temp.getTransactionCount() <= 0) {
+				System.out.println("User has no transaction record");
+				return ;
+			}
+			temp.removeTransaction(transactionID);
+		} catch (UserNotFoundException e) {
+			System.out.println("User not found");
+		}
+	}
 }
