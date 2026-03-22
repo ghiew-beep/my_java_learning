@@ -1,3 +1,5 @@
 *.class
 out/
 *.iml
+*.iml
+.idea/
