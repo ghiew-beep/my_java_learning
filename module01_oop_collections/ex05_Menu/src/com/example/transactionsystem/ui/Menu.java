@@ -75,8 +75,8 @@ public class Menu {
 	}
 
 	private void processUserChoice(int choice) {
-		if ((!devMode && (choice < 0 || choice > 5))
-				|| devMode && (choice < 0 || choice > 7)){
+		if ((!devMode && !(choice >= 1 && choice <= 5))
+				|| devMode && !(choice >= 1 && choice <= 7)){
 			System.out.println("Invalid choice, refer the menu");
 			return ;
 		}
