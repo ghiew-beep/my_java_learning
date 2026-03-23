@@ -7,16 +7,14 @@ import java.util.Scanner;
 
 public class Menu {
 	//--[class fields]----------------------------------------------------------
-	private TransactionsService service;
+	private final TransactionsService service;
 
-	private boolean	devMode = false;
+	private final boolean	devMode;
 	private boolean	showMenu = true;
 
-	private Scanner scanner = new Scanner(System.in);
+	private final Scanner scanner = new Scanner(System.in);
 
 	//--[constructor]-----------------------------------------------------------
-	private Menu() {}
-
 	public Menu(String profile) {
 		Objects.requireNonNull(profile, "Profile cannot be null");
 
