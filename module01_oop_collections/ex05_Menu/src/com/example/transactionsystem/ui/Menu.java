@@ -197,27 +197,34 @@ public class Menu {
 		if (scanner.hasNextInt()) {
 			userID = scanner.nextInt();
 		} else {
+			scanner.nextLine();
 			System.out.println("Invalid input");
 			return;
 		}
 
-		Transaction[] record = service.retrieveTransactionsHistory(userID);
-
-		for (Transaction transaction: record) {
-			if (transaction.getType().equals(TransferCategory.DEBITS)) {
-				System.out.printf("To %s(id = %d) -%d with id = %s%n",
-						transaction.getRecipient().getName(),
-						transaction.getRecipient().getIdentifier(),
-						transaction.getAmount(),
-						transaction.getTransactionID());
-			} else {
-				System.out.printf("From %s(id = %d) +%d with id = %s%n",
-						transaction.getSender().getName(),
-						transaction.getSender().getIdentifier(),
-						transaction.getAmount(),
-						transaction.getTransactionID());
+		try {
+			Transaction[] record = service.retrieveTransactionsHistory(userID);
+			for (Transaction transaction: record) {
+				if (transaction.getType().equals(TransferCategory.DEBITS)) {
+					System.out.printf("To %s(id = %d) -%d with id = %s%n",
+							transaction.getRecipient().getName(),
+							transaction.getRecipient().getIdentifier(),
+							transaction.getAmount(),
+							transaction.getTransactionID());
+				} else {
+					System.out.printf("From %s(id = %d) +%d with id = %s%n",
+							transaction.getSender().getName(),
+							transaction.getSender().getIdentifier(),
+							transaction.getAmount(),
+							transaction.getTransactionID());
+				}
 			}
+		} catch (NullPointerException e) {
+			System.out.println(e.getMessage());
+			return ;
 		}
+
+		scanner.nextLine();
 	}
 
 	private void promptRemoveTransaction() {
