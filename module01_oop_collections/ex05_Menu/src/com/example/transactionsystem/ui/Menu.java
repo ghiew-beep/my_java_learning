@@ -1,5 +1,6 @@
 package com.example.transactionsystem.ui;
 
+import com.example.transactionsystem.model.User;
 import com.example.transactionsystem.service.TransactionsService;
 
 import java.util.Objects;
@@ -95,5 +96,20 @@ public class Menu {
 			case 7: System.exit(0); break;
 		}
 		showMenu = true;
+	}
+
+	private void promptAddUser() {
+		System.out.println("Enter a user name and a balance");
+		System.out.print("-> ");
+
+		try {
+			String name = scanner.next();
+			Integer balance = scanner.nextInt();
+			User newUser = service.addUser(name, balance);
+			System.out.println("User with id = "
+					+ newUser.getIdentifier() + " is added");
+		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

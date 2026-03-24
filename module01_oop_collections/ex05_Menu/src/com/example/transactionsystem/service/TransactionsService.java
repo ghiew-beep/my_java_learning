@@ -30,9 +30,10 @@ public class TransactionsService {
 	public static TransactionsService getInstance() { return INSTANCE; }
 
 	//--[class methods]---------------------------------------------------------
-	public void addUser(String username, Integer initialBalance)
+	public User addUser(String username, Integer initialBalance)
 			throws IllegalArgumentException {
 		userList.add(new User(username, initialBalance));
+		return userList.getUserByID(userList.getUserCount() - 1);
 	}
 
 	public Integer retrieveBalance(int userID)
