@@ -44,8 +44,7 @@ public class TransactionsService {
 	 */
 	public User retrieveBalance(int userID)
 			throws UserNotFoundException {
-		User reference = userList.getUserByID(userID);
-		return reference;
+		return userList.getUserByID(userID);
 	}
 
 	public void
