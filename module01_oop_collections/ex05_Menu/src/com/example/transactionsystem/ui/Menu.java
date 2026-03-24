@@ -138,9 +138,9 @@ public class Menu {
 		}
 
 		try {
-			Integer balance = service.retrieveBalance(targetID);
-			String name = service.;
-			System.out.println(name + " - " + balance);
+			User target = service.retrieveBalance(targetID);
+			//could improve using DTO/MapStruct but overkill
+			System.out.println(target.getName() + " - " + target.getBalance());
 		} catch (UserNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
