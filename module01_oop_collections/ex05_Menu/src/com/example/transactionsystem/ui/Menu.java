@@ -1,5 +1,6 @@
 package com.example.transactionsystem.ui;
 
+import com.example.transactionsystem.exception.IllegalTransactionException;
 import com.example.transactionsystem.exception.UserNotFoundException;
 import com.example.transactionsystem.model.User;
 import com.example.transactionsystem.service.TransactionsService;
@@ -86,7 +87,7 @@ public class Menu {
 		switch (choice) {
 			case 1: promptAddUser(); break;
 			case 2: promptViewUserBalance(); break;
-//			case 3: promptPerformTransfer(); break;
+			case 3: promptPerformTransfer(); break;
 //			case 4: promptViewUserTransactionHistory(); break;
 //			case 5:
 //				if (devMode)
@@ -143,6 +144,44 @@ public class Menu {
 			//could improve using DTO/MapStruct but overkill
 			System.out.println(target.getName() + " - " + target.getBalance());
 		} catch (UserNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void promptPerformTransfer() {
+		System.out.println("Enter a sender ID, a recipient ID, and a transfer amount");
+		System.out.print("-> ");
+
+		int senderID;
+		int recipientID;
+		Integer transferAmount;
+
+		if (scanner.hasNextInt()) {
+			senderID = scanner.nextInt();
+		} else {
+			System.out.println("Invalid input");
+			return;
+		}
+
+		if (scanner.hasNextInt()) {
+			recipientID = scanner.nextInt();
+		} else {
+			System.out.println("Invalid input");
+			return;
+		}
+
+		if (scanner.hasNextInt()) {
+			transferAmount = scanner.nextInt();
+			scanner.nextLine();
+		} else {
+			System.out.println("Invalid input");
+			return;
+		}
+
+		try {
+			service.performTransaction(senderID, recipientID, transferAmount);
+			System.out.println("The transfer is completed");
+		} catch (UserNotFoundException | IllegalTransactionException e) {
 			System.out.println(e.getMessage());
 		}
 	}
