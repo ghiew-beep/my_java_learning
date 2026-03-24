@@ -2,6 +2,8 @@ package com.example.transactionsystem.ui;
 
 import com.example.transactionsystem.exception.IllegalTransactionException;
 import com.example.transactionsystem.exception.UserNotFoundException;
+import com.example.transactionsystem.model.Transaction;
+import com.example.transactionsystem.model.TransferCategory;
 import com.example.transactionsystem.model.User;
 import com.example.transactionsystem.service.TransactionsService;
 
@@ -88,7 +90,7 @@ public class Menu {
 			case 1: promptAddUser(); break;
 			case 2: promptViewUserBalance(); break;
 			case 3: promptPerformTransfer(); break;
-//			case 4: promptViewUserTransactionHistory(); break;
+			case 4: promptViewUserTransactionHistory(); break;
 //			case 5:
 //				if (devMode)
 //					promptRemoveTransaction();
@@ -183,6 +185,38 @@ public class Menu {
 			System.out.println("The transfer is completed");
 		} catch (UserNotFoundException | IllegalTransactionException e) {
 			System.out.println(e.getMessage());
+		}
+	}
+
+	private void promptViewUserTransactionHistory() {
+		System.out.println("Enter a user ID");
+		System.out.print("-> ");
+
+		int userID;
+
+		if (scanner.hasNextInt()) {
+			userID = scanner.nextInt();
+		} else {
+			System.out.println("Invalid input");
+			return;
+		}
+
+		Transaction[] record = service.retrieveTransactionsHistory(userID);
+
+		for (Transaction transaction: record) {
+			if (transaction.getType().equals(TransferCategory.DEBITS)) {
+				System.out.printf("To %s(id = %d) -%d with id = %s%n",
+						transaction.getRecipient().getName(),
+						transaction.getRecipient().getIdentifier(),
+						transaction.getAmount(),
+						transaction.getTransactionID());
+			} else {
+				System.out.printf("From %s(id = %d) +%d with id = %s%n",
+						transaction.getSender().getName(),
+						transaction.getSender().getIdentifier(),
+						transaction.getAmount(),
+						transaction.getTransactionID());
+			}
 		}
 	}
 }

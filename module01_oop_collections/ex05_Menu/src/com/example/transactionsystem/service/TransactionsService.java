@@ -74,7 +74,7 @@ public class TransactionsService {
 	/**
 	 *
 	 * @param userID
-	 * @return either Transaction[] or null if user has no transaction history
+	 * @return either {@link Transaction}[] or  {@link null} if user has no transaction history
 	 * @throws UserNotFoundException
 	 */
 	public Transaction[]
