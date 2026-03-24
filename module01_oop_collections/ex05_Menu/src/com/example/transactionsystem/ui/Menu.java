@@ -235,6 +235,7 @@ public class Menu {
 		try {
 			int userID = Integer.parseInt(token[0]);
 			String transferID = token[1];
+
 			String statement = service.removeTransactionRecord(userID, transferID);
 			System.out.println(statement);
 		} catch (NumberFormatException e) {

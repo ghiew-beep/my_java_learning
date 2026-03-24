@@ -107,6 +107,7 @@ public class TransactionsService {
 			throw new TransactionNotFoundException(
 					"No relevant transaction found for user " + userID);
 		}
+
 		String statement;
 		if (target.getType().equals(TransferCategory.DEBITS)) {
 			statement = String.format("Transfer To %s(id = %d) -%d removed",
