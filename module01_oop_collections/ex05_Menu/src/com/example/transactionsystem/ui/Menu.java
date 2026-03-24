@@ -132,6 +132,7 @@ public class Menu {
 		int targetID;
 		if (scanner.hasNextInt()) {
 			targetID = scanner.nextInt();
+			scanner.nextLine();
 		} else {
 			System.out.println("Invalid input");
 			return ;
