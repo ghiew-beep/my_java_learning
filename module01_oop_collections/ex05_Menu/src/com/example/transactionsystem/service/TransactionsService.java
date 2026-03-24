@@ -33,7 +33,7 @@ public class TransactionsService {
 	public User addUser(String username, Integer initialBalance)
 			throws IllegalArgumentException {
 		userList.add(new User(username, initialBalance));
-		return userList.getUserByID(userList.getUserCount() - 1);
+		return userList.getUserByID(userList.getUserCount());
 	}
 
 	public Integer retrieveBalance(int userID)

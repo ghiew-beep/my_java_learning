@@ -104,12 +104,21 @@ public class Menu {
 		System.out.print("-> ");
 
 		try {
-			String name = scanner.next();
-			Integer balance = scanner.nextInt();
-			scanner.nextLine();
+			String input = scanner.nextLine().trim().replaceAll("^'+|'+$", "");
+			String[] token = input.split("\\s+");
+
+			if (token.length != 2) {
+				System.out.println("Invalid input, try: 'name' 'balance'");
+				return;
+			}
+
+			String name = token[0];
+			Integer balance = Integer.parseInt(token[1].trim().replace("'",""));
 			User newUser = service.addUser(name, balance);
 			System.out.println("User with id = "
 					+ newUser.getIdentifier() + " is added");
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid balance");
 		} catch (IllegalArgumentException e) {
 			System.out.println(e.getMessage());
 		}
