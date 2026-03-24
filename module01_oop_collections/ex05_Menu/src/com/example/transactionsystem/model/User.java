@@ -70,6 +70,9 @@ public class User {
 	 * @return {@link Transaction}[] or null if the user has no transaction record
 	 */
 	public Transaction[] getTransactionsList() {
+		if (transactionsList == null) {
+			return null;
+		}
 		return transactionsList.toArray();
 	}
 

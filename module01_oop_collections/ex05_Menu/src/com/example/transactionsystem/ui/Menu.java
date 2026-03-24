@@ -159,29 +159,24 @@ public class Menu {
 		System.out.println("Enter a sender ID, a recipient ID, and a transfer amount");
 		System.out.print("-> ");
 
+		String input = scanner.nextLine().trim().replaceAll("^'+|'+$", "");
+		String[] token = input.split("\\s+(?=\\d)");
+
+		if (token.length != 3) {
+			System.out.println("Invalid input, try: 'senderID' 'recipientID' 'amount'");
+			return;
+		}
+
 		int senderID;
 		int recipientID;
 		int transferAmount;
 
-		if (scanner.hasNextInt()) {
-			senderID = scanner.nextInt();
-		} else {
-			System.out.println("Invalid input");
-			return;
-		}
-
-		if (scanner.hasNextInt()) {
-			recipientID = scanner.nextInt();
-		} else {
-			System.out.println("Invalid input");
-			return;
-		}
-
-		if (scanner.hasNextInt()) {
-			transferAmount = scanner.nextInt();
-			scanner.nextLine();
-		} else {
-			System.out.println("Invalid input");
+		try {
+			senderID = Integer.parseInt(token[0]);
+			recipientID = Integer.parseInt(token[1]);
+			transferAmount = Integer.parseInt(token[2]);
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid input, IDs and amount must be numbers");
 			return;
 		}
 

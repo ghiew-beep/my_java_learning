@@ -65,7 +65,10 @@ public class TransactionsLinkedList implements TransactionsList {
 					current.prev.next = null;
 				}
 				--nodeCount;
-				break ;
+				if (nodeCount == 0) {
+					head = null;
+				}
+				return ;
 			}
 			current = current.next;
 		}

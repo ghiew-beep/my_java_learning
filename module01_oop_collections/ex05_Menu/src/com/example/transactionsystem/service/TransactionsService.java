@@ -87,9 +87,11 @@ public class TransactionsService {
 	public String removeTransactionRecord(int userID, String transactionID)
 			throws UserNotFoundException, TransactionNotFoundException {
 		boolean targetFound = false;
-		User user = userList.getUserByID(userID);
-		TransactionsList listRef = user.getTransactionsListReference();
-		Transaction[] history = listRef.toArray();
+
+		Transaction[] history = userList.getUserByID(userID).getTransactionsList();
+		Objects.requireNonNull(history,
+				"User " + userID + "has no transaction history");
+
 		Transaction target = null;
 
 		for (Transaction transaction : history) {
@@ -116,7 +118,7 @@ public class TransactionsService {
 					target.getSender().getIdentifier(),
 					target.getAmount());
 		}
-		listRef.remove(transactionID);
+		userList.getUserByID(userID).getTransactionsListReference().remove(transactionID);
 		return statement;
 	}
 
