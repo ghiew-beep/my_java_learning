@@ -80,7 +80,8 @@ public class TransactionsService {
 	public Transaction[]
 	retrieveTransactionsHistory(int userID) throws UserNotFoundException {
 		User reference = userList.getUserByID(userID);
-		Objects.requireNonNull(userList.getUserByID(userID).getTransactionsList(), "User " + userID + "has no transaction history");
+		Objects.requireNonNull(userList.getUserByID(userID).getTransactionsList(),
+				"User " + userID + "has no transaction history");
 		return reference.getTransactionsList();
 	}
 
