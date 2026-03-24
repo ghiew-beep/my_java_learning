@@ -108,7 +108,10 @@ public class Menu {
 		System.out.print("-> ");
 
 		try {
+			//trim trailing "'"
 			String input = scanner.nextLine().trim().replaceAll("^'+|'+$", "");
+
+			//splits on whitespace only if it is followed by a digit
 			String[] token = input.split("\\s+(?=\\d)");
 
 			if (token.length != 2) {
