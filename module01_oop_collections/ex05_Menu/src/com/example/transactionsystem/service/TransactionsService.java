@@ -36,6 +36,12 @@ public class TransactionsService {
 		return userList.getUserByID(userList.getUserCount());
 	}
 
+	/**
+	 *
+	 * @param userID
+	 * @return Integer balance
+	 * @throws UserNotFoundException
+	 */
 	public Integer retrieveBalance(int userID)
 			throws UserNotFoundException {
 		User reference = userList.getUserByID(userID);
