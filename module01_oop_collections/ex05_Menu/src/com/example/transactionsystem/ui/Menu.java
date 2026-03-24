@@ -159,7 +159,7 @@ public class Menu {
 
 		int senderID;
 		int recipientID;
-		Integer transferAmount;
+		int transferAmount;
 
 		if (scanner.hasNextInt()) {
 			senderID = scanner.nextInt();
