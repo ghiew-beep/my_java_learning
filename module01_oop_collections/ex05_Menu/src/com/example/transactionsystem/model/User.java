@@ -67,12 +67,16 @@ public class User {
 
 	/**
 	 *
-	 * @return Transaction[] or null if the user has no transaction record
+	 * @return {@link Transaction}[] or null if the user has no transaction record
 	 */
 	public Transaction[] getTransactionsList() {
 		return transactionsList.toArray();
 	}
 
+	/**
+	 *
+	 * @return {@link TransactionsList} or null
+	 */
 	public TransactionsList getTransactionsListReference() {
 		return transactionsList;
 	}

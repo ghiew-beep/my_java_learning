@@ -77,6 +77,7 @@ public class Menu {
 				return Integer.parseInt(scanner.nextLine().trim());
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid input, please enter a number");
+				System.out.print("-> ");
 			}
 		}
 	}

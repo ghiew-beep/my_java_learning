@@ -91,11 +91,13 @@ public class TransactionsService {
 		TransactionsList listRef = user.getTransactionsListReference();
 		Transaction[] history = listRef.toArray();
 		Transaction target = null;
-		for (int i = 0; i < history.length; i++) {
-			if (history[i].getTransactionID().equals(UUID.fromString(transactionID))) {
-				target = history[i];
+
+		for (Transaction transaction : history) {
+			UUID targetID = UUID.fromString(transactionID);
+			if (transaction.getTransactionID().equals(targetID)) {
+				target = transaction;
 				targetFound = true;
-				break ;
+				break;
 			}
 		}
 		if (!targetFound) {
