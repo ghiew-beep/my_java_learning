@@ -84,9 +84,38 @@ public class TransactionsService {
 		return reference.getTransactionsList();
 	}
 
-	public void removeTransactionRecord(int userID, String transactionID)
+	public String removeTransactionRecord(int userID, String transactionID)
 			throws UserNotFoundException, TransactionNotFoundException {
-		userList.getUserByID(userID).getTransactionsListReference().remove(transactionID);
+		boolean targetFound = false;
+		User user = userList.getUserByID(userID);
+		TransactionsList listRef = user.getTransactionsListReference();
+		Transaction[] history = listRef.toArray();
+		Transaction target = null;
+		for (int i = 0; i < history.length; i++) {
+			if (history[i].getTransactionID().equals(UUID.fromString(transactionID))) {
+				target = history[i];
+				targetFound = true;
+				break ;
+			}
+		}
+		if (!targetFound) {
+			throw new TransactionNotFoundException(
+					"No relevant transaction found for user " + userID);
+		}
+		String statement;
+		if (target.getType().equals(TransferCategory.DEBITS)) {
+			statement = String.format("Transfer To %s(id = %d) -%d removed",
+					target.getRecipient().getName(),
+					target.getRecipient().getIdentifier(),
+					target.getAmount());
+		} else {//for CREDIT
+			statement = String.format("Transfer From %s(id = %d) +%d removed",
+					target.getSender().getName(),
+					target.getSender().getIdentifier(),
+					target.getAmount());
+		}
+		listRef.remove(transactionID);
+		return statement;
 	}
 
 	/**
