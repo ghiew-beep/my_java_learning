@@ -39,13 +39,13 @@ public class TransactionsService {
 	/**
 	 *
 	 * @param userID
-	 * @return Integer balance
+	 * @return {@link User} reference
 	 * @throws UserNotFoundException
 	 */
-	public Integer retrieveBalance(int userID)
+	public User retrieveBalance(int userID)
 			throws UserNotFoundException {
 		User reference = userList.getUserByID(userID);
-		return reference.getBalance();
+		return reference;
 	}
 
 	public void
