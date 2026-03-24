@@ -1,6 +1,7 @@
 package com.example.transactionsystem.ui;
 
 import com.example.transactionsystem.exception.IllegalTransactionException;
+import com.example.transactionsystem.exception.TransactionNotFoundException;
 import com.example.transactionsystem.exception.UserNotFoundException;
 import com.example.transactionsystem.model.Transaction;
 import com.example.transactionsystem.model.TransferCategory;
@@ -91,12 +92,12 @@ public class Menu {
 			case 2: promptViewUserBalance(); break;
 			case 3: promptPerformTransfer(); break;
 			case 4: promptViewUserTransactionHistory(); break;
-//			case 5:
-//				if (devMode)
-//					promptRemoveTransaction();
-//				else
-//					System.exit(0);
-//				break;
+			case 5:
+				if (devMode)
+					promptRemoveTransaction();
+				else
+					System.exit(0);
+				break;
 			case 6: service.getFailedTransactionList(); break;
 			case 7: System.exit(0); break;
 		}
@@ -220,6 +221,30 @@ public class Menu {
 						transaction.getAmount(),
 						transaction.getTransactionID());
 			}
+		}
+	}
+
+	private void promptRemoveTransaction() {
+		System.out.println("Enter a user ID and a transfer ID");
+		System.out.print("-> ");
+
+		String input = scanner.nextLine().trim();
+		String[] token = input.split("\\s+");
+
+		if (token.length != 2) {
+			System.out.println("Invalid input");
+			return;
+		}
+
+		try {
+			int userID = Integer.parseInt(token[0]);
+			String transferID = token[1];
+			String statement = service.removeTransactionRecord(userID, transferID);
+			System.out.println(statement);
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid input");
+		} catch (TransactionNotFoundException | UserNotFoundException e) {
+			System.out.println(e.getMessage());
 		}
 	}
 }
