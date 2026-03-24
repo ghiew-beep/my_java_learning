@@ -41,7 +41,8 @@ public class TransactionsLinkedList implements TransactionsList {
 	}
 
 	@Override
-	public void remove(String UUID_identifier) {
+	public void remove(String UUID_identifier)
+			throws TransactionNotFoundException {
 		if (nodeCount == 0) {
 			throw new TransactionNotFoundException("User: " + ownerID + "\nhas no transaction record");
 		}
