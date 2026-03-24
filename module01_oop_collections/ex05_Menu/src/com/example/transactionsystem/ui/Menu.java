@@ -106,7 +106,7 @@ public class Menu {
 
 		try {
 			String input = scanner.nextLine().trim().replaceAll("^'+|'+$", "");
-			String[] token = input.split("\\s+");
+			String[] token = input.split("\\s+(?=\\d)");
 
 			if (token.length != 2) {
 				System.out.println("Invalid input, try: 'name' 'balance'");
