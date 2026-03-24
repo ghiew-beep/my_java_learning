@@ -1,5 +1,6 @@
 package com.example.transactionsystem.ui;
 
+import com.example.transactionsystem.exception.UserNotFoundException;
 import com.example.transactionsystem.model.User;
 import com.example.transactionsystem.service.TransactionsService;
 
@@ -84,7 +85,7 @@ public class Menu {
 		}
 		switch (choice) {
 			case 1: promptAddUser(); break;
-//			case 2: promptViewUserBalance(); break;
+			case 2: promptViewUserBalance(); break;
 //			case 3: promptPerformTransfer(); break;
 //			case 4: promptViewUserTransactionHistory(); break;
 //			case 5:
@@ -120,6 +121,27 @@ public class Menu {
 		} catch (NumberFormatException e) {
 			System.out.println("Invalid balance");
 		} catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void promptViewUserBalance() {
+		System.out.println("Enter a user ID");
+		System.out.print("-> ");
+
+		int targetID;
+		if (scanner.hasNextInt()) {
+			targetID = scanner.nextInt();
+		} else {
+			System.out.println("Invalid input");
+			return ;
+		}
+
+		try {
+			Integer balance = service.retrieveBalance(targetID);
+			String name = service.;
+			System.out.println(name + " - " + balance);
+		} catch (UserNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
 	}
