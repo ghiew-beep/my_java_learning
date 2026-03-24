@@ -38,6 +38,7 @@ public class Menu {
 			int choice = readInt();
 
 			processUserChoice(choice);
+			System.out.println("---------------------------------------------");
 		}
 	}
 
@@ -83,15 +84,15 @@ public class Menu {
 		}
 		switch (choice) {
 			case 1: promptAddUser(); break;
-			case 2: promptViewUserBalance(); break;
-			case 3: promptPerformTransfer(); break;
-			case 4: promptViewUserTransactionHistory(); break;
-			case 5:
-				if (devMode)
-					promptRemoveTransaction();
-				else
-					System.exit(0);
-				break;
+//			case 2: promptViewUserBalance(); break;
+//			case 3: promptPerformTransfer(); break;
+//			case 4: promptViewUserTransactionHistory(); break;
+//			case 5:
+//				if (devMode)
+//					promptRemoveTransaction();
+//				else
+//					System.exit(0);
+//				break;
 			case 6: service.getFailedTransactionList(); break;
 			case 7: System.exit(0); break;
 		}
@@ -105,6 +106,7 @@ public class Menu {
 		try {
 			String name = scanner.next();
 			Integer balance = scanner.nextInt();
+			scanner.nextLine();
 			User newUser = service.addUser(name, balance);
 			System.out.println("User with id = "
 					+ newUser.getIdentifier() + " is added");

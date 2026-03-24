@@ -9,7 +9,7 @@ public class Program {
 					" or 'Program --profile=production'");
 			return ;
 		}
-		String profile = args[0].substring("--profile".length());
+		String profile = args[0].substring("--profile=".length());
 		try {
 			Menu menu = new Menu(profile);
 			menu.start();
