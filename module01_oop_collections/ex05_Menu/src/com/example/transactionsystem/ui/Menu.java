@@ -99,7 +99,7 @@ public class Menu {
 				else
 					System.exit(0);
 				break;
-			case 6: service.getFailedTransactionList(); break;
+			case 6: inspectFailedTransactions(); break;
 			case 7: System.exit(0); break;
 		}
 		showMenu = true;
@@ -239,7 +239,24 @@ public class Menu {
 			System.out.println(statement);
 		} catch (NumberFormatException e) {
 			System.out.println("Invalid input");
-		} catch (TransactionNotFoundException | UserNotFoundException e) {
+		} catch (TransactionNotFoundException | UserNotFoundException | NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	private void inspectFailedTransactions() {
+		try {
+			Transaction[] failList = service.getFailedTransactionList();
+			for (Transaction failedItem : failList) {
+				System.out.printf("From %s(id = %d) to %s(id = %d) -%d with id = %s%n",
+						failedItem.getSender().getName(),
+						failedItem.getSender().getIdentifier(),
+						failedItem.getRecipient().getName(),
+						failedItem.getRecipient().getIdentifier(),
+						failedItem.getAmount(),
+						failedItem.getTransactionID());
+			}
+		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
 	}
