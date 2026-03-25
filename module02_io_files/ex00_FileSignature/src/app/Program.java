@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Program {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 
 		//--[fields]------------------------------------------------------------
 		SignatureLoader loader = new SignatureLoader();
@@ -45,7 +45,10 @@ public class Program {
 
 			if (analyzer.isMatched(loader.getSignature(), userInput)) {
 				String type = analyzer.getType();
-				//writer append type to result.txt
+				writer.update(type);
+				System.out.println("PROCESSED");
+			} else {
+				System.out.println("UNDEFINED");
 			}
 		}
 	}
