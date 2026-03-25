@@ -16,9 +16,11 @@ public class SignatureLoader {
 
 	//--[methods]---------------------------------------------------------------
 	/**
+	 * Scan the file specified and build a LinkedHashMap sorted descendingly
 	 *
-	 * @param signatureReferenceFileName
-	 * @throws IOException, IllegalStateException(when file contains no valid signature)
+	 * @param signatureReferenceFileName txt file containing "FILE_FORMAT, XX XX XX"
+	 * @throws IOException if the file cannot be read
+	 * @throws IllegalStateException if the file contains no valid signatures
 	 */
 	public void load(String signatureReferenceFileName)
 			throws IOException {
