@@ -7,7 +7,6 @@ import java.util.*;
 
 public class SignatureLoader {
 	//--[fields]----------------------------------------------------------------
-	boolean signatureFound = false;
 	Map<String, byte[]> signatures = new LinkedHashMap<>();
 	Map<String, byte[]> descendingSignatures = null;
 
