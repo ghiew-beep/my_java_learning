@@ -1,10 +1,8 @@
 package app;
 
-import exception.SignatureNotFoundException;
 import utility.SignatureLoader;
 import utility.SignatureAnalyzer;
 import utility.ResultWriter;
-import model.FileSignature;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -43,8 +41,8 @@ public class Program {
 				System.exit(0);
 			}
 
-			if (analyzer.isMatched(loader.getSignature(), userInput)) {
-				String type = analyzer.getType();
+			String type = analyzer.detect(loader.getSignatures(), userInput);
+			if (!type.equals("UNDEFINED")) {
 				writer.update(type);
 				System.out.println("PROCESSED");
 			} else {

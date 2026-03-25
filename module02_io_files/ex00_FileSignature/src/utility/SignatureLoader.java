@@ -95,7 +95,7 @@ public class SignatureLoader {
 	 * @return map of file type names to their magic bytes
 	 * @throws IllegalStateException if {@link #load(String)} has not been called yet
 	 */
-	public Map<String, byte[]> getSignature() {//what if user call this method without 1st load()
+	public Map<String, byte[]> getSignatures() {//what if user call this method without 1st load()
 		if (descendingSignatures == null) {
 			throw new IllegalStateException(
 					"SignatureLoader.getSignature is called without first calling " +
