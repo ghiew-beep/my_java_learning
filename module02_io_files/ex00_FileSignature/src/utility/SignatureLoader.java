@@ -15,7 +15,12 @@ public class SignatureLoader {
 	public SignatureLoader() {}
 
 	//--[methods]---------------------------------------------------------------
-	public void loadSignature(String signatureReferenceFileName)
+	/**
+	 *
+	 * @param signatureReferenceFileName
+	 * @throws IOException, IllegalStateException(when file contains no valid signature)
+	 */
+	public void load(String signatureReferenceFileName)
 			throws IOException {
 		//if file is invalid/not found,
 		// try() will call close() to prevent resource leak
