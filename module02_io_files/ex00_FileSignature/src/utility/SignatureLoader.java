@@ -22,6 +22,8 @@ public class SignatureLoader {
 	 * @throws IOException if the file cannot be read
 	 * @throws IllegalStateException if the file contains no valid signatures
 	 * @throws IllegalArgumentException if the specified file is not a txt file
+	 * or content is not following format "FILE_FORMAT, XX XX XX XX"
+	 * or invalid hex figure detected
 	 */
 	public void load(String signatureReferenceFileName)
 			throws IOException {
