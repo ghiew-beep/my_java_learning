@@ -23,7 +23,7 @@ public class Program {
 
 		//load the signatures the program is expected to know
 		try {
-			loader.loadSignature("signatures.txt");
+			loader.load("signatures.txt");
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
