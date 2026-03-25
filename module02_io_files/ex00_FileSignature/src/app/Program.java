@@ -29,7 +29,7 @@ public class Program {
 
 		//--[program flow]------------------------------------------------------
 		while (true){
-			System.out.println("-> ");
+			System.out.print("-> ");
 
 			userInput = scanner.nextLine();
 			if (userInput.isEmpty()) {
@@ -41,12 +41,16 @@ public class Program {
 				System.exit(0);
 			}
 
-			String type = analyzer.detect(loader.getSignatures(), userInput);
-			if (!type.equals("UNDEFINED")) {
-				writer.update(type);
-				System.out.println("PROCESSED");
-			} else {
-				System.out.println("UNDEFINED");
+			try {
+				String type = analyzer.detect(loader.getSignatures(), userInput);
+				if (!type.equals("UNDEFINED")) {
+					writer.update(type);
+					System.out.println("PROCESSED");
+				} else {
+					System.out.println("UNDEFINED");
+				}
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
 			}
 		}
 	}
