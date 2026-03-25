@@ -95,8 +95,8 @@ public class TransactionsService {
 
 		Transaction target = null;
 
+		UUID targetID = UUID.fromString(transactionID);
 		for (Transaction transaction : history) {
-			UUID targetID = UUID.fromString(transactionID);
 			if (transaction.getTransactionID().equals(targetID)) {
 				target = transaction;
 				targetFound = true;
