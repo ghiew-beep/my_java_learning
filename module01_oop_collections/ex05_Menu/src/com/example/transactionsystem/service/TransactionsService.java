@@ -23,6 +23,8 @@ public class TransactionsService {
 	private static final int serviceID = 1;
 	private final TransactionsList failedTransactionList =
 			new TransactionsLinkedList(serviceID);
+	private static final int MIN_TRANSFER_AMOUNT = 10;
+	private static final int MAX_TRANSFER_AMOUNT = 100000;
 
 	//--[class constructors]----------------------------------------------------
 	//singleton pattern
@@ -56,10 +58,10 @@ public class TransactionsService {
 
 		UUID transactionID = UUID.randomUUID();
 
-		if (transferAmount < 10) {
+		if (transferAmount < MIN_TRANSFER_AMOUNT) {
 			failedTransactionList.add(new Transaction(transactionID, sender, recipient, TransferCategory.DEBITS, transferAmount));
 			throw new IllegalArgumentException("Transaction unsuccessful: Transfer amount must be $10 and above");
-		} else if (transferAmount > 100000) {
+		} else if (transferAmount > MAX_TRANSFER_AMOUNT) {
 			failedTransactionList.add(new Transaction(transactionID, sender, recipient, TransferCategory.DEBITS, transferAmount));
 			throw new IllegalTransactionException(("Transaction unsuccessful: Transfer amount exceeded $100000"));
 		}
