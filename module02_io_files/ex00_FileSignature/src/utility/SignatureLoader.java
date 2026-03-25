@@ -34,38 +34,58 @@ public class SignatureLoader {
 		try (InputStream in = new FileInputStream(signatureReferenceFileName)) {
 			Scanner scanner = new Scanner(in);
 			while (scanner.hasNextLine()) {
-				String line = scanner.nextLine();
-				if (line.isEmpty()) {
-					continue;
-				}
+				String line = scanner.nextLine().trim();
+				if (line.isEmpty()) continue;
 
-				String[] parts = line.split(", ", 2);
-				String typeName = parts[0];
-				String[] hexTokens = parts[1].split(" ");
+				try {
+					String[] parts = line.split(", ", 2);
+					if (parts.length < 2 || parts[1].trim().isEmpty()) {
+						throw new IllegalArgumentException(
+								"invalid format on line: " + line);
+					}
 
-				byte[] magicBytes = new byte[hexTokens.length];
-				for (int i = 0; i < hexTokens.length; i++) {
-					magicBytes[i] = (byte) Integer.parseInt(hexTokens[i], 16);
-				}
-				signatures.put(typeName, magicBytes);
+					String typeName = parts[0];
+					String[] hexTokens = parts[1].split(" ");
 
-				if (!signatureFound) {
-					signatureFound = true;
+					byte[] magicBytes = parseHexTokens(hexTokens, line);
+
+					signatures.put(typeName, magicBytes);
+				} catch (NumberFormatException e) {
+					throw new IllegalArgumentException(
+							"invalid hex value on line: " + line, e);
 				}
 			}
-			if (!signatureFound) {
+			if (signatures.isEmpty()) {
 				throw new IllegalStateException("File contains no valid signature");
 			}
 		}
+		//sort the mapping descending fashion
+		descendingSignatures = sortDescending(signatures);
+	}
 
-		//sort the mapping
-		List<Map.Entry<String, byte[]>> entries = new ArrayList<>(signatures.entrySet());
-		entries.sort((a, b) -> b.getValue().length - a.getValue().length);
-
-		descendingSignatures = new LinkedHashMap<>();
-		for (Map.Entry<String, byte[]> entry : entries) {
-			descendingSignatures.put(entry.getKey(), entry.getValue());
+	private byte[] parseHexTokens(String[] hexTokens, String line) {
+		byte[] magicBytes = new byte[hexTokens.length];
+		try {
+			for (int i = 0; i < hexTokens.length; i++) {
+				magicBytes[i] = (byte) Integer.parseInt(hexTokens[i].trim(), 16);
+			}
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException(
+					"invalid hex value on line: " + line, e);
 		}
+		return magicBytes;
+	}
+
+	private Map<String, byte[]> sortDescending(Map<String, byte[]> map) {
+		List<Map.Entry<String, byte[]>> entries = new ArrayList<>(map.entrySet());
+		entries.sort((a, b) ->
+				b.getValue().length - a.getValue().length);
+
+		Map<String, byte[]> sorted = new LinkedHashMap<>();
+		for (Map.Entry<String, byte[]> entry : entries) {
+			sorted.put(entry.getKey(), entry.getValue());
+		}
+		return sorted;
 	}
 
 	/**
