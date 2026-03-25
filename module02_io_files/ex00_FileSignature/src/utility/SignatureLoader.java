@@ -21,9 +21,14 @@ public class SignatureLoader {
 	 * @param signatureReferenceFileName txt file containing "FILE_FORMAT, XX XX XX"
 	 * @throws IOException if the file cannot be read
 	 * @throws IllegalStateException if the file contains no valid signatures
+	 * @throws IllegalArgumentException if the specified file is not a txt file
 	 */
 	public void load(String signatureReferenceFileName)
 			throws IOException {
+		if (!signatureReferenceFileName.endsWith(".txt")) {
+			throw new IllegalArgumentException(
+					"expected a .txt file, got: " + signatureReferenceFileName);
+		}
 		//if file is invalid/not found,
 		// try() will call close() to prevent resource leak
 		try (InputStream in = new FileInputStream(signatureReferenceFileName)) {
