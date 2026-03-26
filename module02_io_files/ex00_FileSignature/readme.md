@@ -108,6 +108,6 @@ ZIP, 50 4B 03 04
 
 - [List of file signatures — Wikipedia](https://en.wikipedia.org/wiki/List_of_file_signatures)
 
-## Acknowledgements
+## Use of AI
 
 - Development assisted by [Claude](https://claude.ai) (Anthropic) — used for concept explanations, code review, and debugging guidance.
