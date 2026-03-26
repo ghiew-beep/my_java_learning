@@ -4,7 +4,7 @@ MAIN    = app.Program
 
 SOURCES = $(shell find $(SRC_DIR) -name "*.java")
 
-all: compile run
+all: compile
 
 compile:
 	javac -d $(OUT_DIR) $(SOURCES)
