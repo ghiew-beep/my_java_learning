@@ -1,4 +1,4 @@
-# ex00 — File Signature Analyzer
+# ex00_FileSignatures — File Signature Analyzer
 
 Identifies file types by reading their magic bytes (file signature) rather than relying on file extensions.
 
