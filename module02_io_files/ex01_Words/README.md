@@ -1,4 +1,4 @@
-# ex01 — Text Similarity Analyzer
+# ex01_Words — Text Similarity Analyzer
 
 Measures the similarity between two text files using cosine similarity on word frequency vectors.
 
