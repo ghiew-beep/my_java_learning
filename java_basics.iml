@@ -6,7 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/module_00/ex_00_sum_of_digits" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/module_00/ex_01_really_prime_number" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/module00/ex04_stat_decipher_text" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/module01_oop_collections/ex04_business_logic" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/module01_oop_collections/ex05_menu/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/module01_oop_collections/draft_code/ex00_model_v1/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
