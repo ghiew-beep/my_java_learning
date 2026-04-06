@@ -1,4 +1,4 @@
-SRC_DIR = src
+SRC_DIR = app
 OUT_DIR = out
 MAIN    = app.Program
 

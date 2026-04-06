@@ -18,7 +18,7 @@ A result of `1.0` means identical word distribution, `0.0` means no common words
 ex01_Words/
 ├── Makefile
 ├── README.md
-└── src/
+└── app/
     ├── app/
     │   └── Program.java
     ├── model/

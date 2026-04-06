@@ -10,7 +10,7 @@ On startup, the program reads `signatures.txt` which contains a list of known fi
 
 ```
 ex00/
-├── src/
+├── app/
 │   └── com/example/filesignatureanalyzer/
 │       ├── app/
 │       │   └── Program.java
@@ -33,7 +33,7 @@ ex00/
 ### option 1
 ```bash
 # compile @/java_basics/module02_io_files/ex00_FileSignature
-javac -d out src/**/*.java
+javac -d out app/**/*.java
 
 # run from ex00 directory (where signatures.txt lives)
 java -cp out app.Program
