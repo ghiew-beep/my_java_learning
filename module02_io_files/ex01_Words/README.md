@@ -29,7 +29,7 @@ ex01_Words/
 
 ## Requirements
 
-- Java 7+
+- Java 17+
 
 ## How to run
 
