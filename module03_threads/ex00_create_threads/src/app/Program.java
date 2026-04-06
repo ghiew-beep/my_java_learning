@@ -1,12 +1,15 @@
 package app;
 
 class MyThread extends Thread {
+	//--[fields]----------------------------------------------------------------
 	private final String tag;
 
+	//--[custom constructor]----------------------------------------------------
 	MyThread(String tag) {
 		this.tag = tag;
 	}
 
+	//--[methods]---------------------------------------------------------------
 	public void run() {
 		for (int i = 0; i < 50; i++) {
 			System.out.println(Thread.currentThread().getName() + ": " + tag);
@@ -23,6 +26,7 @@ public class Program {
 	public static void main(String[] args) {
 		int count = 0;
 
+		//--[validate input]----------------------------------------------------
 		if (args.length == 1 && args[0].startsWith("--count=")) {
 			String value = args[0].substring("--count=".length());
 			try {
@@ -40,6 +44,7 @@ public class Program {
 			System.exit(1);
 		}
 
+		//--[thread creation]---------------------------------------------------
 		//method 1: extends Thread class
 		// -write a class extends Thread
 		// -custom constructor
@@ -58,10 +63,12 @@ public class Program {
 				}
 			}
 		});
-		
+
+		//--[start threads]-----------------------------------------------------
 		hen.start();
 		egg.start();
 
+		//--[threads end]-------------------------------------------------------
 		try {
 			hen.join();
 			egg.join();
