@@ -46,7 +46,7 @@ public class Program {
 		// -and define runnable under run()
 		Thread hen = new MyThread("Hen");
 
-		//create thread using lambda expression for runnable
+		//create thread with runnable specified using lambda expression
 		Thread egg = new Thread(() -> {
 			for (int i = 0; i < 50; i++) {
 				System.out.println(Thread.currentThread().getName() + ": " + "Egg");
