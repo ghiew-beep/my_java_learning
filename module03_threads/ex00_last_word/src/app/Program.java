@@ -1,4 +1,4 @@
-package src;
+package app;
 
 class MyThread extends Thread {
 	private final String tag;
@@ -10,6 +10,11 @@ class MyThread extends Thread {
 	public void run() {
 		for (int i = 0; i < 50; i++) {
 			System.out.println(Thread.currentThread().getName() + ": " + tag);
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				return;
+			}
 		}
 	}
 }
@@ -35,22 +40,30 @@ public class Program {
 			System.exit(1);
 		}
 
-		Thread hen = new MyThread("Egg");
-		Thread egg = new MyThread("Hen");
-		Thread pip = new Thread(() -> {
+		//create thread the normal way
+		// -write a class extends Thread
+		// -custom constructor
+		// -and define runnable under run()
+		Thread hen = new MyThread("Hen");
+
+		//create thread using lambda expression for runnable
+		Thread egg = new Thread(() -> {
 			for (int i = 0; i < 50; i++) {
-				System.out.println(Thread.currentThread().getName() + ": " + "Pipo");
+				System.out.println(Thread.currentThread().getName() + ": " + "Egg");
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					return;
+				}
 			}
 		});
 		
 		hen.start();
 		egg.start();
-		pip.start();
 
 		try {
 			hen.join();
 			egg.join();
-			pip.join();
 		} catch (InterruptedException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
