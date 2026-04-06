@@ -40,13 +40,14 @@ public class Program {
 			System.exit(1);
 		}
 
-		//create thread the normal way
+		//method 1: extends Thread class
 		// -write a class extends Thread
 		// -custom constructor
 		// -and define runnable under run()
 		Thread hen = new MyThread("Hen");
 
-		//create thread with runnable specified using lambda expression
+		//method 2: implements Runnable interface
+		// -create thread with runnable specified using lambda expression
 		Thread egg = new Thread(() -> {
 			for (int i = 0; i < 50; i++) {
 				System.out.println(Thread.currentThread().getName() + ": " + "Egg");
