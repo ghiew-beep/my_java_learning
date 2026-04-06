@@ -1,4 +1,4 @@
-# Java Thread Synchronization Exercise
+# Java Thread Synchronization Example
 
 ## Overview
 This Java program demonstrates **thread synchronization** using `synchronized`, `wait()`, and `notifyAll()`. Two threads — `"Egg"` and `"Hen"` — alternate printing their respective tags to the console a specified number of times. The program enforces strict turn-taking to avoid race conditions.
