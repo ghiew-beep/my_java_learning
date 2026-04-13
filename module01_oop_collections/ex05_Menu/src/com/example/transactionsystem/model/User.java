@@ -8,15 +8,15 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class User {
-	//fields
+	//--[fields]----------------------------------------------------------------
 	private int identifier;
 	private String name;
 	private Integer balance;
 	private TransactionsList transactionsList;
 
-	//constructor
+	//--[constructor]-----------------------------------------------------------
 		//disable User x = new User{}, must require name and balance
-	private User() {};
+	private User() {}
 	public User(String name, Integer balance)
 			throws IllegalArgumentException {
 
@@ -34,7 +34,7 @@ public class User {
 		transactionsList = new TransactionsLinkedList(identifier);
 	}
 
-	//method
+	//--[method]----------------------------------------------------------------
 		//return Integer instead of int due to main::println uses generics
 		//generics cannot work with primitive
 	public Integer getIdentifier() { return identifier; }

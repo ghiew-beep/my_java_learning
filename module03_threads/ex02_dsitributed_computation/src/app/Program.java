@@ -21,7 +21,7 @@ class SubThread extends Thread {
 		this.sum = 0;
 	}
 
-	//--[method]----------------------------------------------------------------
+	//--[runnable]--------------------------------------------------------------
 	public void run() {
 		sum = 0;
 		int end = Math.min(array.length, startIndex + size);
