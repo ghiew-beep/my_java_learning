@@ -3,15 +3,17 @@ package app;
 class MyThread extends Thread {
 	//--[fields]----------------------------------------------------------------
 	private final String tag;
+	private int count;
 
 	//--[custom constructor]----------------------------------------------------
-	MyThread(String tag) {
+	MyThread(String tag, int count) {
 		this.tag = tag;
+		this.count = count;
 	}
 
 	//--[methods]---------------------------------------------------------------
 	public void run() {
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < count; i++) {
 			System.out.println(Thread.currentThread().getName() + ": " + tag);
 			try {
 				Thread.sleep(1);
@@ -49,12 +51,13 @@ public class Program {
 		// -write a class extends Thread
 		// -custom constructor
 		// -and define runnable under run()
-		Thread hen = new MyThread("Hen");
+		Thread hen = new MyThread("Hen", count);
 
 		//method 2: implements Runnable interface
 		// -create thread with runnable specified using lambda expression
+		int finalCount = count;
 		Thread egg = new Thread(() -> {
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < finalCount; i++) {
 				System.out.println(Thread.currentThread().getName() + ": " + "Egg");
 				try {
 					Thread.sleep(1);
