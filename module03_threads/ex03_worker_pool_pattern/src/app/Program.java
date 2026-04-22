@@ -1,71 +1,116 @@
 package app;
 
 import java.io.*;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 class Downloader {
 	public static void downloadFile(String urlStr, String saveAs) throws IOException {
-		URL url = new URL(urlStr);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
+		try {
+			URL url = new URL(urlStr);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setConnectTimeout(3000);
+			conn.setReadTimeout(3000);
+			conn.setRequestMethod("GET");
 
-		try (InputStream in = conn.getInputStream();
-			 FileOutputStream out = new FileOutputStream(saveAs)) {
-			byte[] buffer = new byte[4096];
-			int bytesRead;
-			while ((bytesRead = in.read(buffer)) != -1) {
-				out.write(buffer, 0, bytesRead);
+			try (InputStream in = conn.getInputStream();
+				 FileOutputStream out = new FileOutputStream(saveAs)) {
+				byte[] buffer = new byte[4096];
+				int bytesRead;
+				while ((bytesRead = in.read(buffer)) != -1) {
+					out.write(buffer, 0, bytesRead);
+				}
+			}
+		} catch (SocketTimeoutException e) {
+			System.out.println("Skipped slow URL: (" + saveAs + ")" + urlStr);
+		}
+	}
+}
+
+class Worker implements Runnable {
+	private final BlockingQueue<Task> queue;
+
+	public Worker(BlockingQueue<Task> queue) {
+		this.queue = queue;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			Task task = queue.poll();
+
+			if (task == null) break;
+
+			System.out.println(
+					Thread.currentThread().getName() +
+							" downloading file_" + task.id
+			);
+
+			try {
+				Downloader.downloadFile(task.url, "file_" + task.id);
+			} catch (IOException e) {
+				System.err.println(e.getMessage());
+				System.exit(1);
 			}
 		}
 	}
 }
 
-class MyThread extends Thread {
-	//--[fields]----------------------------------------------------------------
-	int	currentIndex;
+class Task {
+	final int id;
+	final String url;
 
-	//--[custom constructor]----------------------------------------------------
-	MyThread() {
-
+	Task(int id, String url) {
+		this.id = id;
+		this.url = url;
 	}
-	//--[runnable]--------------------------------------------------------------
-	public void run() {
-
-	}
-}
-
-class DataObject {
-	String[] 	url;
-	int			size;
-	int			currentIndex;
 }
 
 public class Program {
 	public static void main(String[] args) {
 		//--[fields]------------------------------------------------------------
-		int threadsCount = 0;
-		String urlFilePath = "/resource/files_url.txt";
+		int threadsCount;
 
-		//--[input validation and init thread count]----------------------------
+		//--[main logic]--------------------------------------------------------
 		if (args.length != 1) {
 			System.out.println("Invalid format, try: java Program --threadsCount=<number>");
 			System.exit(1);
 		}
 
+		BlockingQueue<Task> queue = new LinkedBlockingQueue<>();
+
 		try {
 			threadsCount = setThreadsCount(args[0]);
 			System.out.println("Threads count set to: " + threadsCount);
-		} catch (IllegalArgumentException e) {
+			InputStream in = Program.class
+					.getClassLoader()
+					.getResourceAsStream("resource/files_url.txt");
+			if (in == null) {
+				throw new RuntimeException("Resource file not found in classpath");
+			}
+
+			int id = 1;
+			try (BufferedReader br = new BufferedReader(
+					new InputStreamReader(in))) {
+				String url;
+				while ((url = br.readLine()) != null) {
+					queue.add(new Task(id++, url));
+				}
+			}
+			for (int i = 0; i < threadsCount; i++) {
+				Thread t = new Thread(new Worker(queue));
+				t.setName("Thread-" + (i + 1));
+				t.start();
+			}
+		} catch (IllegalArgumentException | IOException e) {
 			System.out.println(e.getMessage());
 			System.exit(1);
 		}
-
-		//
-
 	}
 
-	// Make it static so main can call it
 	public static int setThreadsCount(String arg) {
 		final String prefix = "--threadsCount=";
 
@@ -87,10 +132,5 @@ public class Program {
 		}
 
 		return count;
-	}
-
-	public static DataObject loadURL (String path) {
-		DataObject data = new DataObject(path);
-		return data;
 	}
 }
