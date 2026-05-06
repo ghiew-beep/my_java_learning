@@ -30,9 +30,7 @@ Fundamentals of Java:
 - Basic data structures
 - Control flow
 - Core syntax exercises
-
-Progress: **5/6 completed**
-
+  
 ---
 
 ### module01_oop_collections
@@ -43,8 +41,6 @@ Object-Oriented Programming and Collections Framework:
 - Java Collections (List, Set, Map)
 - Iterators and generics
 
-Progress: **6/6 completed**
-
 ---
 
 ### module02_io_files
@@ -53,8 +49,6 @@ File handling and input/output operations:
 - Buffered streams
 - Exception handling in IO
 - Working with file paths and resources
-
-Progress: **2/3 completed**
 
 ---
 
@@ -66,8 +60,6 @@ Multithreading and concurrency:
 - Thread coordination and scheduling
 - Producer-consumer style patterns
 
-Progress: **4/4 completed**
-
 ---
 
 ### module04_JAR
@@ -75,8 +67,6 @@ Java packaging:
 - Creating executable JAR files
 - Manifest configuration
 - Classpath management
-
-Progress: **not started**
 
 ---
 
@@ -88,8 +78,6 @@ Database integration:
 - ResultSet handling
 - CRUD operations
 
-Progress: **not started**
-
 ---
 
 ### module06_unit_testing
@@ -99,27 +87,5 @@ Testing in Java:
 - Assertions
 - Test-driven development (TDD)
 - Mocking fundamentals
-
-Progress: **1/4 completed**
-
----
-
-## Learning Objective
-
-This repository is designed to build strong backend Java fundamentals in a structured way:
-
-- Understand core Java syntax and OOP
-- Work with real-world data structures
-- Handle file systems and I/O streams
-- Build concurrent applications
-- Prepare for backend development (Spring / enterprise Java)
-
----
-
-## Notes
-
-- Each module should be completed sequentially where possible.
-- Thread safety and clean code principles are emphasized in later modules.
-- This repo is intended for interview and backend preparation readiness.
 
 ---
