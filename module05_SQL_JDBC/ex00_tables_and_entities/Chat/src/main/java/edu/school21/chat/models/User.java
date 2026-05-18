@@ -75,7 +75,13 @@ public class User {
 	}
 
 	@Override
-	public toString() {
-
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", login='" + login + '\'' +
+				", password='" + password + '\'' +
+				", createdRoomsCount=" + (createdRooms != null ? createdRooms.size() : 0) +
+				", socializedRoomsCount=" + (socializedRooms != null ? socializedRooms.size() : 0) +
+				'}';
 	}
 }
