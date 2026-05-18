@@ -10,6 +10,7 @@ public class User {
 	private List<Chatroom> createdRooms;
 	private List<Chatroom> socializedRooms;
 
+	//--[Constructor]-----------------------------------------------------------
 	public User() {}
 
 	public User(Long id, String login, String password,
@@ -21,6 +22,7 @@ public class User {
 		this.socializedRooms = socializedRooms;
 	}
 
+	//--[Getter/Setter]---------------------------------------------------------
 	public Long getId() {
 		return id;
 	}
@@ -61,6 +63,7 @@ public class User {
 		this.socializedRooms = socializedRooms;
 	}
 
+	//--[Override equals(), hashCode(), toString()]-----------------------------
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
