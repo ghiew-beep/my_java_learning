@@ -10,14 +10,14 @@ Each module is organized independently and follows incremental difficulty progre
 
 ## Progress Tracker
 
-| Module | Topic | Progress |
-|--------|------|----------|
+| Module | Topic | Progress      |
+|--------|------|---------------|
 | module00 | Structure & Arrays | 5/6 completed |
 | module01 | OOP & Collections | 6/6 completed |
 | module02 | IO & Files | 2/3 completed |
 | module03 | Threads | 4/4 completed |
-| module04 | JAR Packaging | not started |
-| module05 | SQL & JDBC | 1/4 WIP |
+| module04 | JAR Packaging | not started   |
+| module05 | SQL & JDBC | 2/4 WIP       |
 | module06 | Unit Testing | 1/4 completed |
 
 ---
