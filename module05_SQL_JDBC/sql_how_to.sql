@@ -36,3 +36,7 @@ psql -U chat_app -h localhost -d chat -c "DROP TABLE test;"
 # to execute sql script
 psql -U user_name -h localhost -d chat -f src/main/resources/schema.sql
 psql -U user_name -h localhost -d chat -f src/main/resources/data.sql
+
+# enter a DB
+psql -U postgres -d chat
+psql -U user_name -h localhost -d chat
