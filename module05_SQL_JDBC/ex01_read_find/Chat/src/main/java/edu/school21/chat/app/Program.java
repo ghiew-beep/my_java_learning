@@ -1,4 +1,4 @@
-package main.java.edu.school21.chat.app;
+package edu.school21.chat.app;
 
 import edu.school21.chat.models.Message;
 import edu.school21.chat.repositories.MessagesRepository;
