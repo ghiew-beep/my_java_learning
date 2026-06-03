@@ -76,14 +76,18 @@ public class Message {
 		return Objects.hash(id);
 	}
 
+	private static final DateTimeFormatter FORMATTER =
+			DateTimeFormatter.ofPattern("dd/MM/yy HH:mm");
+
 	@Override
 	public String toString() {
-		return "Message{" +
-				"id=" + id +
-				", author=" + (author != null ? author.getLogin() : "null") +
-				", room=" + (room != null ? room.getName() : "null") +
-				", text='" + text + '\'' +
-				", dateTime=" + dateTime +
+		String formattedDateTime = dateTime != null ? dateTime.format(FORMATTER) : "null";
+		return "Message: {\n" +
+				"id-" + id + ",\n" +
+				"author={" + (author != null ? author.toShortString(): "null") + "}\n" +
+				"room={" + (room != null ? room.toShortString() : "null") + "},\n" +
+				"text=\"" + text + "\",\n" +
+				"dateTime=" + formattedDateTime + "\n" +
 				'}';
 	}
 }
