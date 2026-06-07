@@ -17,7 +17,7 @@ Each module is organized independently and follows incremental difficulty progre
 | module02 | IO & Files | 2/3 completed |
 | module03 | Threads | 4/4 completed |
 | module04 | JAR Packaging | not started   |
-| module05 | SQL & JDBC | 4/5 WIP       |
+| module05 | SQL & JDBC | 5/5 WIP       |
 | module06 | Unit Testing | 1/4 completed |
 
 ---
