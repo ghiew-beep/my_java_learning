@@ -19,7 +19,7 @@ The code written here is not production-ready. The fundamentals learned here are
 
 ## ex00_tables_and_entities
 
-### learning outcome:
+### Learning Outcome:
 1. Design database tables from domain models
 2. Implement correct relationship types
 3. Use SERIAL for auto-generated numeric IDs
@@ -59,7 +59,7 @@ ex00 is about setting up the FOUNDATION for the mock application - no Java datab
 
 ## ex01_read_find
 
-### learning outcome:
+### Learning Outcome:
 1. Configure connection pool using HikariCP
 2. Implement DAO (Repository) pattern
 3. Write JOIN queries across multiple tables
@@ -116,13 +116,13 @@ ex01 is about READING data from the database using JDBC for the first time.
 
     ```text
     [ DataSource ] (The Manager)
-    &darr; gives
+     ↓ gives
     
     [ Connection ] (The Pipe/Session)
-    &darr; creates
+     ↓ creates
     
     [ PreparedStatement ] (The Blueprint)
-    &darr; returns
+     ↓ returns
     
     [ ResultSet ] (The Output Table)
     ```
@@ -298,7 +298,7 @@ ex01 is about READING data from the database using JDBC for the first time.
    
 ## ex02_create_save
 
-### learning outcome:
+### Learning Outcome:
 1. Adding new message(from existing user to a valid chatroom) to database with JDBC INSERT
 2. Retrieving auto-generated IDs with getGeneratedKeys()
 3. Transaction Management, Manual commit/rollback with setAutoCommit(false)
@@ -370,3 +370,23 @@ ex01 is about READING data from the database using JDBC for the first time.
    - SELECT in SQL works like return()
    - if query is valid, integer 1 will be returned instead of copied data from DB, thereby improve performance
    - serve as lightweight existence check
+
+## ex03_update
+
+### Learning Outcome:
+1. Modifying existing records in database
+2. Handling null values correctly (set column to NULL)
+3. (Bonus) Version checking for concurrent updates 
+4. Ensuring exactly one row was updated 
+5. Maintaining data integrity during updates
+
+### note:
+
+1. ex02_create_save vs ex03_update
+   - SQL command: INSERT vs UPDATE
+   - create new data vs modify existing data
+   - let postgres generate new ID vs caller must provide valid ID
+
+2. To let setNull() works without running into error
+   - remove NOT NULL constraints on 'text' and 'message_date' from 'messages' in schema.sql
+   - rerun the schema.sql and data.sql before running the java program
